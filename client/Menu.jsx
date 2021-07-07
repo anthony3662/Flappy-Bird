@@ -9,8 +9,10 @@ export default class Menu extends React.Component {
     this.toggleLeaderboard = this.toggleLeaderboard.bind(this);
     this.pullLeaderboard = this.pullLeaderboard.bind(this);
     this.sendScore = this.sendScore.bind(this);
+    this.toggleImage = this.toggleImage.bind(this);
 
     this.state = {
+      imageIndex: 0,
       leaderboard: false,
       sendEnabled: true,
       validationMessage: false,
@@ -21,6 +23,14 @@ export default class Menu extends React.Component {
 
   componentDidMount() {
     this.pullLeaderboard();
+    this.toggleImage();
+  }
+
+  toggleImage() { //toggles between the two versions of the selected bird
+    setTimeout(this.toggleImage, 600);
+    this.setState({
+      imageIndex: this.state.imageIndex === 0 ? 1 : 0
+    });
   }
 
   toggleLeaderboard() {
@@ -80,7 +90,7 @@ export default class Menu extends React.Component {
     return (
       <div id="menu">
         <h1 id="gameTitle">Flappy Bird</h1>
-        <img id="menuBird" src={spriteLibrary[this.props.currentBird][0]}/>
+        <img id="menuBird" src={spriteLibrary[this.props.currentBird][this.state.imageIndex]}/>
         <h2 id="best">{`Best Score: ${highScore}`}</h2>
         {!this.state.leaderboard &&
           <React.Fragment>

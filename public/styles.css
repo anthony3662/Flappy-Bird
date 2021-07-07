@@ -42,7 +42,7 @@
 }
 .bigButton {
   background-color: white;
-  border: solid 2px purple;
+  border: solid 2px fuchsia;
   font-family: Verdana;
   color: purple;
   font-size: larger;
@@ -52,6 +52,7 @@
 }
 .bigButton:hover {
   border: solid 2px orangered;
+  color: orangered;
 }
 .smallHeader {
   font-family: Verdana;
