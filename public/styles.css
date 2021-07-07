@@ -1,0 +1,122 @@
+#app {
+  display: flex;
+  justify-content: center;
+}
+#canvas {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 700px;
+  background-color: white;
+  border: solid 2px black;
+  overflow: hidden;
+}
+#scoreboard {
+  position: absolute;
+  top: 0px;
+  font-family: Impact;
+  font-size: xx-large;
+  color: blue;
+  user-select: none;
+  z-index: 3;
+}
+#menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#menuBird {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+#best {
+  font-family: Phosphate;
+  color: green;
+}
+#gameTitle {
+  font-family: Phosphate;
+  color: blue;
+}
+.bigButton {
+  background-color: white;
+  border: solid 2px purple;
+  font-family: Verdana;
+  color: purple;
+  font-size: larger;
+  cursor: pointer;
+  margin: 5px;
+  width: 150px;
+}
+.bigButton:hover {
+  border: solid 2px orangered;
+}
+.smallHeader {
+  font-family: Verdana;
+}
+.selection {
+  background-color: white;
+  border: none;
+  font-family: Verdana;
+  color: blue;
+  cursor: pointer;
+}
+.selection:hover {
+  color: fuchsia;
+}
+#leaderboardContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 90px;
+}
+#rightColumn {
+  width: 40px;
+}
+.record {
+  font-family: Verdana;
+  font-variant: small-caps;
+  margin: 3px;
+}
+#formContainer {
+  display: flex;
+  flex-direction: row;
+  margin-top: 4px;
+}
+#textbox {
+  border: solid 1px blue;
+  border-radius: 0;
+}
+#sendButton {
+  border: solid 1px orangered;
+  background-color: white;
+  font-family: Verdana;
+  font-variant: small-caps;
+  border-radius: 0;
+  margin-left: 4px;
+}
+#sendButton:hover {
+  border: solid 1px fuchsia;
+}
+#validationMessage {
+  font-family: Verdana;
+  font-size: smaller;
+  color: red;
+  margin: 4px;
+}
+#backButton {
+  font-family: Verdana;
+  font-size: smaller;
+  font-variant: small-caps;
+  text-decoration: underline;
+  margin: 0;
+  color: blue;
+  cursor: pointer;
+}
