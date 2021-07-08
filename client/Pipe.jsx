@@ -3,14 +3,14 @@ import React from 'react';
 const PIPE_WIDTH = 100;
 const PIPE_OPENING = 200;
 
-export default function Pipe(props) { //this.props.object,
+export default function Pipe(props) { //props.color, props.top, props.offset
   var topStyle = {
     position: 'absolute',
     left: props.offset,
     top: 0,
     width: PIPE_WIDTH,
     height: props.top,
-    backgroundColor: '#bd0909',
+    backgroundColor: '#' + props.color,
     border: 'solid 2px black',
     borderRadius: 5
   };
@@ -20,7 +20,7 @@ export default function Pipe(props) { //this.props.object,
     top: props.top + PIPE_OPENING,
     width: PIPE_WIDTH,
     height: 500,
-    backgroundColor: '#bd0909',
+    backgroundColor: '#' + props.color,
     border: 'solid 2px black',
     borderRadius: 5
   };

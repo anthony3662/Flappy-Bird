@@ -73,7 +73,7 @@ export default class Menu extends React.Component {
       sendEnabled: false
     });
     axios.post('/leaders', {
-      user: nickname,
+      user: nickname.slice(0, 10),
       score: parseInt(window.localStorage.getItem('highScore'))
     })
     .then(() => {

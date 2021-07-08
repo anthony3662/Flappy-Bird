@@ -22,6 +22,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
+    this.randomHexColor = this.randomHexColor.bind(this);
     this.getBirdCSS = this.getBirdCSS.bind(this);
     this.getBirdImage = this.getBirdImage.bind(this);
     this._click = this._click.bind(this);
@@ -44,11 +45,13 @@ class App extends React.Component {
       pipes: [ // will always store exactly two pipes. Pipes are 400 px apart.
         {
           offset: 400,
-          top: Math.random() * 500
+          top: Math.random() * 500,
+          color: this.randomHexColor()
         },
         {
           offset: 800,
-          top: Math.random() * 500
+          top: Math.random() * 500,
+          color: this.randomHexColor()
         }
       ]
     };
@@ -59,6 +62,10 @@ class App extends React.Component {
     if (!window.localStorage.getItem('highScore')) {
       window.localStorage.setItem('highScore', 0);
     }
+  }
+
+  randomHexColor() {
+    return Math.floor(Math.random() * 16777216).toString(16).toUpperCase();
   }
 
   getBirdImage () {
@@ -86,18 +93,23 @@ class App extends React.Component {
   newPipe() {
     var newState = [];
     newState[0] = this.state.pipes[1];
+    newState[0].color = this.randomHexColor();
     newState[1] = {
       offset: 700,
-      top: Math.random() * 500
+      top: Math.random() * 500,
+      color: this.randomHexColor()
     };
     this.setState({
       pipes: newState,
-      score: this.state.score + 1
+      score: this.state.score + 1,
     });
   }
 
   _click() { //shoud eventually remove game starting code
     if (this.state.running) {
+      var flapSound = document.getElementById('flap');
+      flapSound.currentTime = 0;
+      flapSound.play();
       this.setState({
         yVelocity: JUMP_V
       });
@@ -119,11 +131,13 @@ class App extends React.Component {
       pipes: [ // will always store exactly two pipes. Pipes are 400 px apart.
         {
           offset: 400,
-          top: Math.random() * 500
+          top: Math.random() * 500,
+          color: this.randomHexColor()
         },
         {
           offset: 800,
-          top: Math.random() * 500
+          top: Math.random() * 500,
+          color: this.randomHexColor()
         }
       ]
 
@@ -136,17 +150,18 @@ class App extends React.Component {
     }
     setTimeout(this.tick, 1000 / FRAME);
     this.testCollision();
+
     this.setState((state, props) => ({
       y: state.y + state.yVelocity / FRAME,
       yVelocity: state.yVelocity + GRAVITY / FRAME,
       pipes: [
         {
           top: state.pipes[0].top,
-          offset: state.pipes[0].offset - (PIPE_VELOCITY / FRAME)
+          offset: state.pipes[0].offset - (PIPE_VELOCITY / FRAME),
         },
         {
           top: state.pipes[1].top,
-          offset: state.pipes[1].offset - (PIPE_VELOCITY / FRAME)
+          offset: state.pipes[1].offset - (PIPE_VELOCITY / FRAME),
         }
       ]
     }), () => {
@@ -169,25 +184,29 @@ class App extends React.Component {
   }
 
   gameOver() {
+    var hitSound = document.getElementById('hit');
+    hitSound.currentTime = 0;
+    hitSound.play();
     if (this.state.score > parseInt(window.localStorage.getItem('highScore'))) {
       window.localStorage.setItem('highScore', this.state.score);
     }
     this.setState({
       running: false
     });
-    // alert('hahaha');
   }
 
   render() {
     return (
       <div id="canvas" onClick={this._click}>
+        <audio id="flap" src="wing.mp3" preload="auto"></audio>
+        <audio id="hit" src="hit.mp3" preload="auto"></audio>
         <p id="scoreboard">{this.state.score}</p>
         {this.state.running &&
           <React.Fragment>
             <img style={this.getBirdCSS()} src={this.getBirdImage()}/>
 
-            <Pipe top={this.state.pipes[0].top} offset={this.state.pipes[0].offset}/>
-            <Pipe top={this.state.pipes[1].top} offset={this.state.pipes[1].offset}/>
+            <Pipe top={this.state.pipes[0].top} offset={this.state.pipes[0].offset} color={this.state.pipes[0].color}/>
+            <Pipe top={this.state.pipes[1].top} offset={this.state.pipes[1].offset} color={this.state.pipes[1].color}/>
 
 
           </React.Fragment>
