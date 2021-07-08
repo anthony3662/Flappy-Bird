@@ -65,7 +65,7 @@ class App extends React.Component {
   }
 
   randomHexColor() {
-    return Math.floor(Math.random() * 16777216).toString(16).toUpperCase();
+    return Math.floor(Math.random() * 16777216).toString(16).toUpperCase().padStart(6, '0');
   }
 
   getBirdImage () {
