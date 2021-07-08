@@ -14,7 +14,7 @@ let getTop = () => {
 let add = (entry) => {
   var newScore = new Score(entry);
   return newScore.save()
-}
+};
 
 module.exports.getTop = getTop;
 module.exports.add = add;

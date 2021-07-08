@@ -18,7 +18,7 @@
   top: 0px;
   font-family: Impact;
   font-size: xxx-large;
-  color: blue;
+  color: rgb(234, 0, 255);
   user-select: none;
   z-index: 3;
   margin-top: 15px;
@@ -40,6 +40,12 @@
 #gameTitle {
   font-family: Phosphate;
   color: blue;
+}
+#newBest {
+  font-family: Phosphate;
+  color: forestgreen;
+  font-size: xxx-large;
+  margin: 20px;
 }
 .bigButton {
   background-color: white;
@@ -107,7 +113,7 @@
 #sendButton:hover {
   border: solid 1px fuchsia;
 }
-#validationMessage {
+.validationMessage {
   font-family: Verdana;
   font-size: smaller;
   color: red;

@@ -23,6 +23,7 @@ export default class Menu extends React.Component {
       addingBird: false,
       sendEnabled: true,
       validationMessage: false,
+      noNameMessage: false,
       users: [],
       scores: [],
 
@@ -35,8 +36,12 @@ export default class Menu extends React.Component {
     this.toggleImage();
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.ticker);
+  }
+
   toggleImage() { //toggles between the two versions of the selected bird
-    setTimeout(this.toggleImage, 600);
+    this.ticker = setTimeout(this.toggleImage, 600);
     this.setState({
       imageIndex: this.state.imageIndex === 0 ? 1 : 0
     });
@@ -91,7 +96,7 @@ export default class Menu extends React.Component {
     })
     .catch((err) => {
       console.err(err);
-    })
+    });
   }
 
   toggleUpload() {
@@ -131,7 +136,8 @@ export default class Menu extends React.Component {
     image0.removeAttribute('src');
     image1.removeAttribute('src');
     this.setState({
-      filesLoaded: 0
+      filesLoaded: 0,
+      noNameMessage: false
     });
   }
 
@@ -143,7 +149,9 @@ export default class Menu extends React.Component {
   saveBird() {
     var name = document.getElementById('newName').value;
     if (name.length === 0) {
-      document.getElementById('newName').value = ('Name cannot be blank');
+      this.setState({
+        noNameMessage: true
+      });
       return;
     }
     spriteLibrary[name] = {};
@@ -161,14 +169,14 @@ export default class Menu extends React.Component {
       <div id="menu">
         <h1 id="gameTitle">Flappy Bird</h1>
         <img id="menuBird" src={spriteLibrary[this.props.currentBird][this.state.imageIndex]}/>
-        <h2 id="best">{`Best Score: ${highScore}`}</h2>
+        <h2 id={this.props.newBest ? "newBest" : "best"}>{this.props.newBest ? `New Best! ${highScore}` : `Best Score: ${highScore}`}</h2>
         {!this.state.leaderboard &&
           <React.Fragment>
             {!this.state.addingBird &&
               <React.Fragment>
-                <button class="bigButton" onClick={this.props.startGame}>Start Game</button>
-                <button class="bigButton" onClick={this.toggleLeaderboard}>Leaderboard</button>
-                <h3 class="smallHeader">Choose Bird</h3>
+                <button className="bigButton" onClick={this.props.startGame}>Start Game</button>
+                <button className="bigButton" onClick={this.toggleLeaderboard}>Leaderboard</button>
+                <h3 className="smallHeader">Choose Bird</h3>
                 {this.props.userBird.length > 0 &&
                   <p id="addedMessage">Custom bird added!</p>
                 }
@@ -184,14 +192,14 @@ export default class Menu extends React.Component {
             }
             {this.state.addingBird &&
               <React.Fragment>
-                <h3 class="smallHeader" id="uploadHeader">Upload Bird</h3>
+                <h3 className="smallHeader" id="uploadHeader">Upload Bird</h3>
                 <div id="uploadRow">
-                  <img class="uploadedImage" id="0"/>
-                  <img class="uploadedImage" id="1"/>
+                  <img className="uploadedImage" id="0"/>
+                  <img className="uploadedImage" id="1"/>
                 </div>
-                <p class="fileInstruction">Congrats on unlocking this!</p>
-                <p class="fileInstruction">1st image for jumping</p>
-                <p class="fileInstruction">2nd image for falling!</p>
+                <p className="fileInstruction">Congrats on unlocking this!</p>
+                <p className="fileInstruction">1st image for jumping</p>
+                <p className="fileInstruction">2nd image for falling!</p>
                 <input id="fileButton" name="fileButton" type="file" accept="image/*" onChange={this.loadFile}/>
                 <div id="urlRow">
                   <button onClick={this.loadURL}>Upload URL</button>
@@ -199,12 +207,15 @@ export default class Menu extends React.Component {
                 </div>
                 <input id="newName" type="text" placeholder="Name Your Bird"/>
                 <div id="confirmationRow">
-                  <button class="confButton" onClick={this.clearUpload}>Clear</button>
-                  <button class="confButton" onClick={this.cancelUpload}>Cancel</button>
+                  <button className="confButton" onClick={this.clearUpload}>Clear</button>
+                  <button className="confButton" onClick={this.cancelUpload}>Cancel</button>
                   {this.state.filesLoaded === 2 &&
                     <button class="confButton" onClick={this.saveBird}>Save</button>
                   }
                 </div>
+                {this.state.noNameMessage &&
+                  <p className="validationMessage">Please name your bird.</p>
+                }
               </React.Fragment>
             }
           </React.Fragment>
@@ -212,13 +223,13 @@ export default class Menu extends React.Component {
         {this.state.leaderboard &&
           <React.Fragment>
             <p id="backButton" onClick={this.toggleLeaderboard}>Back to Bird Selection</p>
-            <h3 class="smallHeader">Leaderboard</h3>
+            <h3 className="smallHeader">Leaderboard</h3>
             <div id="leaderboardContainer">
-              <div class="column">
-                {this.state.users.map(user => <p class="record">{user}</p>)}
+              <div className="column">
+                {this.state.users.map(user => <p className="record">{user}</p>)}
               </div>
-              <div class="column" id="rightColumn">
-                {this.state.scores.map(score => <p class="record">{score}</p>)}
+              <div className="column" id="rightColumn">
+                {this.state.scores.map(score => <p className="record">{score}</p>)}
               </div>
             </div>
             <div id="formContainer">
@@ -226,7 +237,7 @@ export default class Menu extends React.Component {
               <button id="sendButton" onClick={this.sendScore}>{this.state.sendEnabled ? 'Send Best Score' : 'Score Sent'}</button>
             </div>
             {this.state.validationMessage &&
-              <p id="validationMessage">Username cannot be blank</p>
+              <p className="validationMessage">Username cannot be blank</p>
             }
           </React.Fragment>
         }

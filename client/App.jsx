@@ -35,6 +35,7 @@ class App extends React.Component {
     this.addCustom = this.addCustom.bind(this);
 
     this.state = {
+      newBest: false,
       userBird: '',
       bird: 'classic',
 
@@ -98,6 +99,9 @@ class App extends React.Component {
   }
 
   newPipe() {
+    var pointSound = document.getElementById('point');
+    pointSound.currentTime = 0;
+    pointSound.play();
     var newState = [];
     newState[0] = this.state.pipes[1];
     newState[0].color = this.randomHexColor();
@@ -194,11 +198,14 @@ class App extends React.Component {
     var hitSound = document.getElementById('hit');
     hitSound.currentTime = 0;
     hitSound.play();
+    var best = false;
     if (this.state.score > parseInt(window.localStorage.getItem('highScore'))) {
+      best = true;
       window.localStorage.setItem('highScore', this.state.score);
     }
     this.setState({
-      running: false
+      running: false,
+      newBest: best
     });
   }
 
@@ -213,6 +220,7 @@ class App extends React.Component {
       <div id="canvas" onClick={this._click}>
         <audio id="flap" src="wing.mp3" preload="auto"></audio>
         <audio id="hit" src="hit.mp3" preload="auto"></audio>
+        <audio id="point" src="point.mp3" preload="auto"></audio>
         <p id="scoreboard">{this.state.score}</p>
         {this.state.running &&
           <React.Fragment>
@@ -225,7 +233,7 @@ class App extends React.Component {
           </React.Fragment>
         }
         {!this.state.running &&
-          <Menu startGame={this.startGame} setBird={this.setBird} currentBird={this.state.bird} addCustom={this.addCustom} userBird={this.state.userBird}/>
+          <Menu startGame={this.startGame} setBird={this.setBird} currentBird={this.state.bird} addCustom={this.addCustom} userBird={this.state.userBird} newBest={this.state.newBest}/>
         }
 
 

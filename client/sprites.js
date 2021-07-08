@@ -9,7 +9,7 @@ var spriteLibrary = {
   },
   wallstreetbets: {
     0: 'https://media.tenor.com/images/092371cb8e94dc5112c068146cb3f2ce/tenor.png',
-    1: 'https://cdni.rt.com/files/2021.01/xxl/6016b93285f54046e775c25b.JPG'
+    1: 'https://i.ibb.co/7krxPFQ/6016b93285f54046e775c25b-JPG.png'
   },
   taylorcorn: {
     0: 'https://i.ibb.co/XCzzLTQ/taylorcorn0.jpg',
