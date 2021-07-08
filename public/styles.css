@@ -21,6 +21,7 @@
   color: blue;
   user-select: none;
   z-index: 3;
+  margin-top: 15px;
 }
 #menu {
   display: flex;
@@ -120,4 +121,84 @@
   margin: 0;
   color: blue;
   cursor: pointer;
+}
+#addBird {
+  width: 300;
+  font-family: Verdana;
+  background-color: white;
+  font-variant: small-caps;
+  margin-top: 10px;
+  cursor: pointer;
+  color: purple;
+  border: solid 1px green;
+}
+#addBird:hover {
+  border-color: blue;
+  color: orangered
+}
+#uploadRow {
+  display: flex;
+  flex-direction: row;
+}
+.uploadedImage {
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  object-fit: contain;
+}
+.fileInstruction {
+  margin: 0;
+  font-family: Verdana;
+  font-size: small;
+  color: maroon;
+}
+#fileButton {
+  margin-top: 10px;
+  border: solid 1px teal;
+  background-color: white;
+  border-radius: 4px;
+}
+#urlRow {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+}
+#uploadURL {
+  width: 161px;
+  border: solid 1px teal;
+  border-radius: 4px;
+}
+#uploadHeader {
+  margin-top: 0;
+}
+#newName {
+  width: 250px;
+  margin-top: 5px;
+  border-radius: 4px;
+  border: solid 1px green;
+}
+#confirmationRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+}
+.confButton {
+  background-color: white;
+  border-radius: 0;
+  border: solid 1px blue;
+  font-family: Verdana;
+  color: blue;
+  cursor: pointer;
+  margin: 5px;
+}
+.confButton:hover {
+  border-color: fuchsia;
+  color: orangered;
+}
+#addedMessage {
+  font-size: small;
+  font-family: Verdana;
+  color: green;
 }

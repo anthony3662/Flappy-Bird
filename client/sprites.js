@@ -1,4 +1,4 @@
-const spriteLibrary = {
+var spriteLibrary = {
   classic: {
     0: 'https://toppng.com/uploads/preview/flappy-bird-no-background-11549936960agq8fxhfbr.png',
     1: 'https://image.pngaaa.com/914/1318914-middle.png'

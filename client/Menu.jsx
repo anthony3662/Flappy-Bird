@@ -10,14 +10,23 @@ export default class Menu extends React.Component {
     this.pullLeaderboard = this.pullLeaderboard.bind(this);
     this.sendScore = this.sendScore.bind(this);
     this.toggleImage = this.toggleImage.bind(this);
+    this.toggleUpload = this.toggleUpload.bind(this);
+    this.loadFile = this.loadFile.bind(this);
+    this.loadURL = this.loadURL.bind(this);
+    this.clearUpload = this.clearUpload.bind(this);
+    this.cancelUpload = this.cancelUpload.bind(this);
+    this.saveBird = this.saveBird.bind(this);
 
     this.state = {
       imageIndex: 0,
       leaderboard: false,
+      addingBird: false,
       sendEnabled: true,
       validationMessage: false,
       users: [],
-      scores: []
+      scores: [],
+
+      filesLoaded: 0,
     };
   }
 
@@ -85,6 +94,67 @@ export default class Menu extends React.Component {
     })
   }
 
+  toggleUpload() {
+    if (parseInt(window.localStorage.getItem('highScore')) >= 50) {
+      this.setState({
+        addingBird: !this.state.addingBird
+      });
+    }
+  }
+
+  loadFile(e) {
+    if (this.state.filesLoaded >= 2) {
+      return;
+    }
+    var image = document.getElementById('' + this.state.filesLoaded);
+    image.src = URL.createObjectURL(e.target.files[0]);
+    this.setState({
+      filesLoaded: this.state.filesLoaded + 1
+    });
+  }
+
+  loadURL() {
+    if (this.state.filesLoaded >= 2 || document.getElementById('uploadURL').value.length === 0) {
+      return;
+    }
+    var image = document.getElementById('' + this.state.filesLoaded);
+    image.src = document.getElementById('uploadURL').value;
+    document.getElementById('uploadURL').value = '';
+    this.setState({
+      filesLoaded: this.state.filesLoaded + 1
+    });
+  }
+
+  clearUpload() {
+    var image0 = document.getElementById('0');
+    var image1 = document.getElementById('1');
+    image0.removeAttribute('src');
+    image1.removeAttribute('src');
+    this.setState({
+      filesLoaded: 0
+    });
+  }
+
+  cancelUpload() {
+    this.clearUpload();
+    this.toggleUpload();
+  }
+
+  saveBird() {
+    var name = document.getElementById('newName').value;
+    if (name.length === 0) {
+      document.getElementById('newName').value = ('Name cannot be blank');
+      return;
+    }
+    spriteLibrary[name] = {};
+    spriteLibrary[name]['0'] = document.getElementById('0').src;
+    spriteLibrary[name]['1'] = document.getElementById('1').src;
+    this.props.addCustom(name);
+    this.props.setBird(name);
+    this.cancelUpload();
+
+  }
+
   render () {
     var highScore = parseInt(window.localStorage.getItem('highScore'));
     return (
@@ -94,13 +164,49 @@ export default class Menu extends React.Component {
         <h2 id="best">{`Best Score: ${highScore}`}</h2>
         {!this.state.leaderboard &&
           <React.Fragment>
-            <button class="bigButton" onClick={this.props.startGame}>Start Game</button>
-            <button class="bigButton" onClick={this.toggleLeaderboard}>Leaderboard</button>
-            <h3 class="smallHeader">Choose Bird</h3>
-            <Selection bird={'classic'} scoreRequired={0} score={highScore} setBird={this.props.setBird}/>
-            <Selection bird={'nyan'} scoreRequired={5} score={highScore} setBird={this.props.setBird}/>
-            <Selection bird={'wallstreetbets'} scoreRequired={10} score={highScore} setBird={this.props.setBird}/>
-            <Selection bird={'taylorcorn'} scoreRequired={50} score={highScore} setBird={this.props.setBird}/>
+            {!this.state.addingBird &&
+              <React.Fragment>
+                <button class="bigButton" onClick={this.props.startGame}>Start Game</button>
+                <button class="bigButton" onClick={this.toggleLeaderboard}>Leaderboard</button>
+                <h3 class="smallHeader">Choose Bird</h3>
+                {this.props.userBird.length > 0 &&
+                  <p id="addedMessage">Custom bird added!</p>
+                }
+                <Selection bird={'classic'} scoreRequired={0} score={highScore} setBird={this.props.setBird}/>
+                <Selection bird={'nyan'} scoreRequired={5} score={highScore} setBird={this.props.setBird}/>
+                <Selection bird={'wallstreetbets'} scoreRequired={10} score={highScore} setBird={this.props.setBird}/>
+                <Selection bird={'taylorcorn'} scoreRequired={25} score={highScore} setBird={this.props.setBird}/>
+                {this.props.userBird.length > 0 &&
+                  <Selection bird={this.props.userBird} scoreRequired={0} score={highScore} setBird={this.props.setBird}/>
+                }
+                <button id="addBird" onClick={this.toggleUpload}>{highScore >= 50 ? 'Add your own bird' : 'Add your own bird 50 score required'}</button>
+              </React.Fragment>
+            }
+            {this.state.addingBird &&
+              <React.Fragment>
+                <h3 class="smallHeader" id="uploadHeader">Upload Bird</h3>
+                <div id="uploadRow">
+                  <img class="uploadedImage" id="0"/>
+                  <img class="uploadedImage" id="1"/>
+                </div>
+                <p class="fileInstruction">Congrats on unlocking this!</p>
+                <p class="fileInstruction">1st image for jumping</p>
+                <p class="fileInstruction">2nd image for falling!</p>
+                <input id="fileButton" name="fileButton" type="file" accept="image/*" onChange={this.loadFile}/>
+                <div id="urlRow">
+                  <button onClick={this.loadURL}>Upload URL</button>
+                  <input id="uploadURL" type="text" placeholder="Image URL"/>
+                </div>
+                <input id="newName" type="text" placeholder="Name Your Bird"/>
+                <div id="confirmationRow">
+                  <button class="confButton" onClick={this.clearUpload}>Clear</button>
+                  <button class="confButton" onClick={this.cancelUpload}>Cancel</button>
+                  {this.state.filesLoaded === 2 &&
+                    <button class="confButton" onClick={this.saveBird}>Save</button>
+                  }
+                </div>
+              </React.Fragment>
+            }
           </React.Fragment>
         }
         {this.state.leaderboard &&

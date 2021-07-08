@@ -32,8 +32,10 @@ class App extends React.Component {
     this.gameOver = this.gameOver.bind(this);
     this.startGame = this.startGame.bind(this);
     this.setBird = this.setBird.bind(this);
+    this.addCustom = this.addCustom.bind(this);
 
     this.state = {
+      userBird: '',
       bird: 'classic',
 
       score: 0,
@@ -62,6 +64,11 @@ class App extends React.Component {
     if (!window.localStorage.getItem('highScore')) {
       window.localStorage.setItem('highScore', 0);
     }
+    document.body.onkeyup = function(e){
+      if(e.keyCode === 32 || e.keyCode === 38 || e.keyCode === 87){
+          this._click();
+      }
+    }.bind(this);
   }
 
   randomHexColor() {
@@ -105,7 +112,7 @@ class App extends React.Component {
     });
   }
 
-  _click() { //shoud eventually remove game starting code
+  _click() {
     if (this.state.running) {
       var flapSound = document.getElementById('flap');
       flapSound.currentTime = 0;
@@ -195,6 +202,12 @@ class App extends React.Component {
     });
   }
 
+  addCustom(bird) {
+    this.setState({
+      userBird: bird
+    });
+  }
+
   render() {
     return (
       <div id="canvas" onClick={this._click}>
@@ -212,7 +225,7 @@ class App extends React.Component {
           </React.Fragment>
         }
         {!this.state.running &&
-          <Menu startGame={this.startGame} setBird={this.setBird} currentBird={this.state.bird}/>
+          <Menu startGame={this.startGame} setBird={this.setBird} currentBird={this.state.bird} addCustom={this.addCustom} userBird={this.state.userBird}/>
         }
 
 
