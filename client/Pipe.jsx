@@ -26,8 +26,8 @@ export default function Pipe(props) { //props.color, props.top, props.offset
   };
   return (
     <React.Fragment>
-      <div style={topStyle}></div>
-      <div style={bottomStyle}></div>
+      <div id={props.color} style={topStyle}></div>
+      <div id={props.color} style={bottomStyle}></div>
     </React.Fragment>
   );
 };

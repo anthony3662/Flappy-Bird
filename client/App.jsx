@@ -49,12 +49,14 @@ class App extends React.Component {
         {
           offset: 400,
           top: Math.random() * 500,
-          color: this.randomHexColor()
+          color: this.randomHexColor(),
+          key: 200
         },
         {
           offset: 800,
           top: Math.random() * 500,
-          color: this.randomHexColor()
+          color: this.randomHexColor(),
+          key: 201
         }
       ]
     };
@@ -103,12 +105,13 @@ class App extends React.Component {
     pointSound.currentTime = 0;
     pointSound.play();
     var newState = [];
-    newState[0] = this.state.pipes[1];
-    newState[0].color = this.randomHexColor();
+    newState[0] = Object.assign({}, this.state.pipes[1]);
+    // newState[0].color = this.randomHexColor();
     newState[1] = {
       offset: 700,
       top: Math.random() * 500,
-      color: this.randomHexColor()
+      color: this.randomHexColor(),
+      key: Math.random()
     };
     this.setState({
       pipes: newState,
@@ -143,12 +146,14 @@ class App extends React.Component {
         {
           offset: 400,
           top: Math.random() * 500,
-          color: this.randomHexColor()
+          color: this.randomHexColor(),
+          key: 0
         },
         {
           offset: 800,
           top: Math.random() * 500,
-          color: this.randomHexColor()
+          color: this.randomHexColor(),
+          key: 1
         }
       ]
 
@@ -169,10 +174,14 @@ class App extends React.Component {
         {
           top: state.pipes[0].top,
           offset: state.pipes[0].offset - (PIPE_VELOCITY / FRAME),
+          color: state.pipes[0].color,
+          key: state.pipes[0].key
         },
         {
           top: state.pipes[1].top,
           offset: state.pipes[1].offset - (PIPE_VELOCITY / FRAME),
+          color: state.pipes[1].color,
+          key: state.pipes[1].key
         }
       ]
     }), () => {
@@ -226,8 +235,8 @@ class App extends React.Component {
           <React.Fragment>
             <img style={this.getBirdCSS()} src={this.getBirdImage()}/>
 
-            <Pipe top={this.state.pipes[0].top} offset={this.state.pipes[0].offset} color={this.state.pipes[0].color}/>
-            <Pipe top={this.state.pipes[1].top} offset={this.state.pipes[1].offset} color={this.state.pipes[1].color}/>
+            <Pipe key={this.state.pipes[0].key} top={this.state.pipes[0].top} offset={this.state.pipes[0].offset} color={this.state.pipes[0].color}/>
+            <Pipe key={this.state.pipes[1].key} top={this.state.pipes[1].top} offset={this.state.pipes[1].offset} color={this.state.pipes[1].color}/>
 
 
           </React.Fragment>
