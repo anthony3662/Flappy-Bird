@@ -236,7 +236,7 @@ class App extends React.Component {
   render() {
 
     return (
-      <div id="canvas" onClick={this._click}>
+      <div id="canvas" onMouseDown={this._click}>
         <audio id="flap" src="wing.mp3" preload="auto"></audio>
         <audio id="hit" src="hit.mp3" preload="auto"></audio>
         <audio id="point" src="point.mp3" preload="auto"></audio>
