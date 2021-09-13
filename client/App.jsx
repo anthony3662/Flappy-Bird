@@ -109,6 +109,7 @@ class App extends React.Component {
   newPipe() {
     var pointSound = document.getElementById('point');
     pointSound.currentTime = 0;
+    pointSound.volume = 0.1;
     pointSound.play();
     var newState = [];
     newState[0] = Object.assign({}, this.state.pipes[1]);
@@ -129,6 +130,7 @@ class App extends React.Component {
     if (this.state.running) {
       var flapSound = document.getElementById('flap');
       flapSound.currentTime = 0;
+      flapSound.volume = 0.1;
       flapSound.play();
       this.setState({
         yVelocity: JUMP_V
@@ -211,6 +213,7 @@ class App extends React.Component {
 
   gameOver() {
     var hitSound = document.getElementById('hit');
+    hitSound.volume = 0.1;
     hitSound.currentTime = 0;
     hitSound.play();
     var best = false;
