@@ -213,3 +213,27 @@
   color: white;
   text-align: center;
 }
+#instructionIcon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+#instructionBox {
+  position: absolute;
+  width: 156px;
+  height: 40px;
+  border: solid 1px blue;
+  right: 40px;
+  bottom: 40px;
+  padding: 3px;
+  user-select: none;
+}
+#instructionText {
+  font-family: Verdana;
+  font-size: small;
+  margin: 0;
+  user-select: none;
+}
