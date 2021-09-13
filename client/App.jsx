@@ -69,7 +69,11 @@ class App extends React.Component {
     }
     document.body.onkeydown = function(e){
       if(e.keyCode === 32 || e.keyCode === 38 || e.keyCode === 87){
+        if (this.state.running) {
           this._click();
+        } else {
+          this.startGame();
+        }
       }
     }.bind(this);
   }
