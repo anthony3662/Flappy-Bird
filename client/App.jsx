@@ -67,7 +67,7 @@ class App extends React.Component {
     if (!window.localStorage.getItem('highScore')) {
       window.localStorage.setItem('highScore', 0);
     }
-    document.body.onkeyup = function(e){
+    document.body.onkeydown = function(e){
       if(e.keyCode === 32 || e.keyCode === 38 || e.keyCode === 87){
           this._click();
       }
