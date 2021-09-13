@@ -208,3 +208,8 @@
   font-family: Verdana;
   color: green;
 }
+.secret {
+  font-family: Verdana;
+  color: white;
+  text-align: center;
+}
