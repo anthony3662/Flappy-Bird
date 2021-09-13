@@ -100,6 +100,8 @@ class App extends React.Component {
     };
   }
 
+
+
   newPipe() {
     var pointSound = document.getElementById('point');
     pointSound.currentTime = 0;
@@ -225,6 +227,7 @@ class App extends React.Component {
   }
 
   render() {
+
     return (
       <div id="canvas" onClick={this._click}>
         <audio id="flap" src="wing.mp3" preload="auto"></audio>
