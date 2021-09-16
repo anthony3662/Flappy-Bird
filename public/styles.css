@@ -112,6 +112,7 @@
   font-variant: small-caps;
   border-radius: 0;
   margin-left: 4px;
+  cursor: pointer;
 }
 #sendButton:hover {
   border: solid 1px fuchsia;
