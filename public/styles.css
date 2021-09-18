@@ -225,15 +225,19 @@
   height: 50px;
   cursor: pointer;
 }
+#instructionIcon:hover {
+  transform: scale(1.08);
+}
 #instructionBox {
   position: absolute;
   width: 156px;
   height: 40px;
-  border: solid 1px blue;
+  border: solid 1px blueviolet;
   right: 40px;
   bottom: 40px;
   padding: 3px;
   user-select: none;
+  background-color: white;
 }
 #instructionText {
   font-family: Verdana;
